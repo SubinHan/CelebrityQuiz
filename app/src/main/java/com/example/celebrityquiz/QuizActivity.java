@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -124,7 +126,6 @@ public class QuizActivity extends AppCompatActivity {
         Gson gson = new Gson();//json으로 받은 데이터를 내가 만든 객체에 자동으로 set 해주는 기능을 제공
         Type type = new TypeToken<List<Quiz>>(){}.getType();
         List<Quiz> list = gson.fromJson(string, type);//stringBuilder.toString(); 이 문자열을 Quiz 클래스 생성자 형태로 저장??
-
         // Set sublist based on user set level
         if (level == 1) {
             assert list != null;
@@ -158,6 +159,11 @@ public class QuizActivity extends AppCompatActivity {
                 ArrayList<Quiz> list = new ArrayList<>(quizList);
                 i.putExtra("quizList", list);
                 i.setFlags(Intent. FLAG_ACTIVITY_CLEAR_TOP | Intent. FLAG_ACTIVITY_SINGLE_TOP );
+
+                GameDataManager gameDataManager = GameDataManager.getInstance();
+                String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                gameDataManager.addGameData(new GameData(userEmail, quizList, Integer.valueOf(textTime.getText().toString()), 0, GameData.GAMEMODE_NORMAL));
+
                 startActivity(i);
             }
         });

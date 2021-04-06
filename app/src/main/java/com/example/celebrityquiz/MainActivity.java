@@ -2,6 +2,7 @@ package com.example.celebrityquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public int level;
     public int seconds;
 
+    FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
             startActivity();
         }
+
+        mAuth = FirebaseAuth.getInstance();
 
         // Define Level views
         radioButtonLevelOne = findViewById(R.id.radioButtonLevelOne);
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess() {
+            Log.d("FIREBASEUSERID", mAuth.getUid());
             downloadTask = null;
             progressBarDownload.setProgress(progressBarDownload.getMax());
             buttonStartQuiz.setEnabled(true); // Enable Start button when download is successful

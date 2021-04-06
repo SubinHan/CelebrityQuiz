@@ -57,6 +57,11 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startToast("Successful Login");
+                                if(user != null){
+                                    Log.d("FIREBASEUSERID", user.toString());
+                                    Log.d("FIREBASEUSERID", mAuth.getUid());
+                                    Log.d("FIREBASEUSERID", user.getEmail());
+                                }
                                 startActivity(MainActivity.class);
                             } else {
                                 if(task.getException()!=null) {

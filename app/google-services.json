@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "140373954588",
+    "firebase_url": "https://celebrityquiz-project-default-rtdb.firebaseio.com/",
     "project_id": "celebrityquiz-project",
     "storage_bucket": "celebrityquiz-project.appspot.com"
   },
