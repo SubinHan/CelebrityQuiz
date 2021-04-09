@@ -46,6 +46,27 @@
             android:name="com.example.celebrityquiz.PasswordResetActivity"
             android:parentActivityName="com.example.celebrityquiz.MainActivity">
         </activity>
+
+        <activity
+            android:name="com.example.celebrityquiz.HomeActivity"
+            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+        </activity>
+
+        <activity
+            android:name="com.example.celebrityquiz.QuizOptionActivity"
+            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+        </activity>
+
+        <activity
+            android:name="com.example.celebrityquiz.ScienceActivity"
+            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+        </activity>
+
+        <activity
+            android:name="com.example.celebrityquiz.AnimalActivity"
+            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+        </activity>
+
     </application>
 
 </manifest>

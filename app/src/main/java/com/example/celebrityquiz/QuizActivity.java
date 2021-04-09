@@ -3,6 +3,7 @@ package com.example.celebrityquiz;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -44,6 +46,10 @@ public class QuizActivity extends AppCompatActivity {
     private Button buttonNext;
     private TextView textTime;
     private CountDownTimer countDownTimer;
+
+    private Button buttonAddTime;
+    private int remainTime;
+    private Button buttonRemoveOption;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +167,25 @@ public class QuizActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        buttonAddTime = findViewById(R.id.buttonAddTime);
+        buttonAddTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTime();
+                buttonAddTime.setEnabled(false);
+            }
+        });
+
+        buttonRemoveOption = findViewById(R.id.buttonRemoveOption);
+        buttonRemoveOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Quiz currentQuestion = quizList.get(indexCurrentQuestion);
+                removeOption(currentQuestion);
+                buttonRemoveOption.setEnabled(false);
+            }
+        });
     }
 
     // Start countdown. OnFinish, start Solution Activity
@@ -170,6 +195,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onTick(long millisUntilFinished) {//타이머가 종료될 때까지 동작
                 textTime.setText(String.valueOf((int) (millisUntilFinished / 1000)));
+                remainTime = (int) (millisUntilFinished / 1000);
             }
 
             @Override
@@ -256,6 +282,84 @@ public class QuizActivity extends AppCompatActivity {
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    //buttonAddTime
+    public void addTime() {
+        createNewTimer(remainTime + 10);
+    }
+
+    //buttonAddTime
+    public void createNewTimer(final int timeInMillis) {
+        if(countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+        countDownTimer = new CountDownTimer(timeInMillis * 1000, 1000) {
+            @Override
+            public void onTick(final long millisUntilFinished) {
+                textTime.setText(String.valueOf((int) (millisUntilFinished / 1000)));
+                seconds = (int) millisUntilFinished;
+            }
+
+            @Override
+            public void onFinish() {
+                Intent i = new Intent(QuizActivity.this, SolutionActivity.class);
+                i.putExtra("score", getScore());
+                // Change List to ArrayList to accommodate subList
+                ArrayList<Quiz> list = new ArrayList<>(quizList);
+                i.putExtra("quizList", list);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(i);
+            }
+        }.start();
+    }
+
+    //buttonRemoveOption
+    public void removeOption(Quiz currentQuestion){
+        Random rand = new Random();
+        int random = (rand.nextInt(4)) + 1;//1~4
+
+        if(currentQuestion.correctAnswer == 1){
+            while(random == 1){
+                random = (rand.nextInt(4)) + 1;
+            }if(random == 2){
+                radioButtonTwo.setText("");
+            }else if(random == 3){
+                radioButtonThree.setText("");
+            }else if(random == 4){
+                radioButtonFour.setText("");
+            }
+        }else if(currentQuestion.correctAnswer == 2){
+            while(random == 2){
+                random = (rand.nextInt(4)) + 1;
+            }if(random == 1){
+                radioButtonOne.setText("");
+            }else if(random == 3){
+                radioButtonThree.setText("");
+            }else if(random == 4){
+                radioButtonFour.setText("");
+            }
+        }else if(currentQuestion.correctAnswer == 3){
+            while(random == 3){
+                random = (rand.nextInt(4)) + 1;
+            }if(random == 1){
+                radioButtonOne.setText("");
+            }else if(random == 2){
+                radioButtonTwo.setText("");
+            }else if(random == 4){
+                radioButtonFour.setText("");
+            }
+        }else if(currentQuestion.correctAnswer == 4){
+            while(random == 4){
+                random = (rand.nextInt(4)) + 1;
+            }if(random == 1){
+                radioButtonOne.setText("");
+            }else if(random == 2){
+                radioButtonTwo.setText("");
+            }else if(random == 3){
+                radioButtonThree.setText("");
             }
         }
     }

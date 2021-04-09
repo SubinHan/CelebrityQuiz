@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Titles/Utility -->
-    <string name="app_name">Celebrity Quiz</string>
+    <string name="app_name">Quiz</string>
     <string name="back" />
     <string name="settings" />
 
