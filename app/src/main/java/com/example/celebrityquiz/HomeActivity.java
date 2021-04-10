@@ -1,6 +1,7 @@
 package com.example.celebrityquiz;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         startQuizCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, QuizOptionActivity.class));
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }
         });
 

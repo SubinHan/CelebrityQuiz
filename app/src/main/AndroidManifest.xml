@@ -22,50 +22,17 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.example.celebrityquiz.QuizActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
+        <activity android:name="com.example.celebrityquiz.QuizActivity" />
 
-        <activity
-            android:name="com.example.celebrityquiz.SolutionActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
+        <activity android:name="com.example.celebrityquiz.SolutionActivity" />
 
-        <activity
-            android:name="com.example.celebrityquiz.LoginActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
+        <activity android:name="com.example.celebrityquiz.LoginActivity" />
 
-        <activity
-            android:name="com.example.celebrityquiz.MainActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
+        <activity android:name="com.example.celebrityquiz.PasswordResetActivity" />
 
-        <activity
-            android:name="com.example.celebrityquiz.PasswordResetActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
+        <activity android:name="com.example.celebrityquiz.HomeActivity" />
 
-        <activity
-            android:name="com.example.celebrityquiz.HomeActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
-
-        <activity
-            android:name="com.example.celebrityquiz.QuizOptionActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
-
-        <activity
-            android:name="com.example.celebrityquiz.ScienceActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
-
-        <activity
-            android:name="com.example.celebrityquiz.AnimalActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
-        </activity>
+        <activity android:name="com.example.celebrityquiz.SettingsActivity" />
 
     </application>
 

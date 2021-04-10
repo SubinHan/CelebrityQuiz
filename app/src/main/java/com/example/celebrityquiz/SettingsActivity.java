@@ -2,6 +2,7 @@ package com.example.celebrityquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -12,28 +13,49 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ScienceActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     // Declare Variables
+    private RadioButton radioButtonCelebrity;
+    private RadioButton radioButtonScience;
+    private RadioButton radioButtonAnimal;
+
     private RadioButton radioButtonLevelOne;
     private RadioButton radioButtonLevelTwo;
     private RadioButton radioButtonLevelThree;
+
     private RadioButton radioButton30;
     private RadioButton radioButton60;
     private RadioButton radioButton90;
+
     private ProgressBar progressBarDownload;
+
     private Button buttonStartQuiz;
+
     public int level;
     public int seconds;
+    public String jsonUrl;
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_settings);
 
         if(FirebaseAuth.getInstance().getCurrentUser()==null){
             startActivity();
         }
+
+        mAuth = FirebaseAuth.getInstance();
+
+        // Define Quiz views
+        radioButtonCelebrity = findViewById(R.id.radioButtonCelebrity);
+        radioButtonScience = findViewById(R.id.radioButtonScience);
+        radioButtonAnimal = findViewById(R.id.radioButtonAnimal);
+        radioButtonCelebrity.setChecked(true);
+        radioButtonScience.setChecked(false);
+        radioButtonAnimal.setChecked(false);
 
         // Define Level views
         radioButtonLevelOne = findViewById(R.id.radioButtonLevelOne);
@@ -74,6 +96,7 @@ public class ScienceActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess() {
+            Log.d("FIREBASEUSERID", mAuth.getUid());
             downloadTask = null;
             progressBarDownload.setProgress(progressBarDownload.getMax());
             buttonStartQuiz.setEnabled(true); // Enable Start button when download is successful
@@ -102,7 +125,13 @@ public class ScienceActivity extends AppCompatActivity {
     public void onButtonUpdate(View view) {
         if(downloadTask == null) {
             // Import data from internet
-            String jsonUrl = "https://api.jsonbin.io/b/5dd263732e22356f234d90cb/175";
+            if(radioButtonCelebrity.isChecked()){
+                jsonUrl = "https://api.jsonbin.io/b/5e8f60bb172eb6438960f731";
+            }else if(radioButtonScience.isChecked()){
+                jsonUrl = "https://api.jsonbin.io/b/5dd263732e22356f234d90cb/175";
+            }else if(radioButtonAnimal.isChecked()){
+                jsonUrl = "https://api.jsonbin.io/b/5dd263732e22356f234d90cb/174";
+            }
             downloadTask = new DownloadTask(downloadListener, this);
             downloadTask.execute(jsonUrl);
         }
