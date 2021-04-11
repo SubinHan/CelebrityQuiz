@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 startActivity(HomeActivity.class);
-
+                                GameDataManager.getInstance();
                                 startToast("Successful Login");
                                 if(user != null){
                                     Log.d("FIREBASEUSERID", user.toString());
