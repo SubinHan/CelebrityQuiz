@@ -25,8 +25,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
@@ -51,6 +54,9 @@ public class QuizActivity extends AppCompatActivity {
 
     private Button buttonAddTime;
     private int remainTime;
+    private int leftTime;
+    private int level;
+    private String domain;
     private Button buttonRemoveOption;
 
     @Override
@@ -110,38 +116,57 @@ public class QuizActivity extends AppCompatActivity {
 
         // Access intent interface and get variables
         Intent intent = getIntent();
-        int level = intent.getIntExtra("level", 0);//intent로 데이터를 넘겨주지 않았을때 기본 데이터를 넣어주는 역할
-        seconds = intent.getIntExtra("seconds", 30);
-        String string = null;
+        if(!intent.getBooleanExtra("isReview", false)) {
+            level = QuizInfoOriginator.getInstance().getLevel();
+            seconds = QuizInfoOriginator.getInstance().getSeconds();
+            domain = QuizInfoOriginator.getInstance().getDomain();
+            leftTime = 0;
+            String string = null;
 
-        // Safely read data from saved file
-        try {
-            FileInputStream fileInputStream = openFileInput("myJson");//myJson 파일 열기
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuilder stringBuilder = new StringBuilder();//문자열을 더할 때 새로운 객체를 생성하는 것이 아니라 기존 데이터에 더한다.
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);//문자열 더하기
+            // Safely read data from saved file
+            try {
+                FileInputStream fileInputStream = openFileInput("myJson");//myJson 파일 열기
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder stringBuilder = new StringBuilder();//문자열을 더할 때 새로운 객체를 생성하는 것이 아니라 기존 데이터에 더한다.
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);//문자열 더하기
+                }
+                string = stringBuilder.toString();//만들어진 문자열 출력
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            string = stringBuilder.toString();//만들어진 문자열 출력
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        Gson gson = new Gson();//json으로 받은 데이터를 내가 만든 객체에 자동으로 set 해주는 기능을 제공
-        Type type = new TypeToken<List<Quiz>>(){}.getType();
-        List<Quiz> list = gson.fromJson(string, type);//stringBuilder.toString(); 이 문자열을 Quiz 클래스 생성자 형태로 저장??
-        // Set sublist based on user set level
-        if (level == 1) {
-            assert list != null;
-            quizList = list.subList(0, 5);
-        } else if (level == 2) {
-            assert list != null;
-            quizList = list.subList(5, 10);
-        } else {
-            assert list != null;
-            quizList = list.subList(10, 15);
+            Gson gson = new Gson();//json으로 받은 데이터를 내가 만든 객체에 자동으로 set 해주는 기능을 제공
+            Type type = new TypeToken<List<Quiz>>() {
+            }.getType();
+            List<Quiz> list = gson.fromJson(string, type);//stringBuilder.toString(); 이 문자열을 Quiz 클래스 생성자 형태로 저장??
+            // Set sublist based on user set level
+            if (level == 1) {
+                assert list != null;
+                quizList = list.subList(0, 5);
+            } else if (level == 2) {
+                assert list != null;
+                quizList = list.subList(5, 10);
+            } else {
+                assert list != null;
+                quizList = list.subList(10, 15);
+            }
+
+        }
+        else
+        {
+            GameDataManager gameDataManager = GameDataManager.getInstance();
+            GameData gameData = gameDataManager.getGameDataListOrderById(FirebaseAuth.getInstance().getCurrentUser().getEmail()).get(intent.getIntExtra("position", 0));
+
+
+            level = gameData.getLevel();
+            seconds = gameData.getSeconds();
+            domain = gameData.getDomain();
+            leftTime = 0;
+
+            quizList = gameData.getQuizList();
         }
 
         // initialise and set for each index in current activity as current question
@@ -168,9 +193,13 @@ public class QuizActivity extends AppCompatActivity {
 
                 GameDataManager gameDataManager = GameDataManager.getInstance();
                 String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                gameDataManager.addGameData(new GameData(userEmail, quizList, Integer.valueOf(textTime.getText().toString()), 0, GameData.GAMEMODE_NORMAL));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HH:mm", Locale.getDefault());
+                String currentDateandTime = sdf.format(new Date());
+                gameDataManager.addGameData(new GameData(userEmail, quizList, remainTime + leftTime, Integer.valueOf(textTime.getText().toString()), getScore()*1000 + 100 + level*100 - leftTime, GameData.GAMEMODE_NORMAL,
+                        level, domain, currentDateandTime));
 
                 startActivity(i);
+                finish();
             }
         });
 
@@ -202,6 +231,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onTick(long millisUntilFinished) {//타이머가 종료될 때까지 동작
                 textTime.setText(String.valueOf((int) (millisUntilFinished / 1000)));
                 remainTime = (int) (millisUntilFinished / 1000);
+                leftTime++;
             }
 
             @Override
@@ -386,5 +416,11 @@ public class QuizActivity extends AppCompatActivity {
             if (quizList.get(i).userAnswer == quizList.get(i).correctAnswer) score++;
         }
         return score;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        stopTimer();
     }
 }

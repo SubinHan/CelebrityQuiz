@@ -89,49 +89,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/historyCardView"
-            style="@style/cardViewStyle"
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/startQuizCardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/menuTextView"
-            app:layout_constraintTop_toTopOf="@+id/startQuizCardView"
-            android:layout_marginRight="16dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/historyImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/history"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.35" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="History"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/historyImageView" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
             android:id="@+id/rankCardView"
             android:layout_width="0dp"
             style="@style/cardViewStyle"
@@ -175,13 +132,15 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/reviewCardView"
+            style="@style/cardViewStyle"
             android:layout_width="0dp"
             android:layout_height="140dp"
-            style="@style/cardViewStyle"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/historyCardView"
-            app:layout_constraintStart_toStartOf="@+id/historyCardView"
-            app:layout_constraintTop_toBottomOf="@+id/historyCardView" >
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rankCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rankCardView"
+            app:layout_constraintTop_toTopOf="@+id/rankCardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -199,12 +158,12 @@
                     app:layout_constraintVertical_bias="0.35" />
 
                 <TextView
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Review"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -215,37 +174,42 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="165dp"
-            android:layout_height="130dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/rankCardView"
-            app:layout_constraintTop_toBottomOf="@+id/rankCardView">
+            android:id="@+id/settingsCardView"
+            android:layout_width="0dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/startQuizCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/startQuizCardView"
+            app:layout_constraintTop_toTopOf="@+id/startQuizCardView">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="127dp">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="89dp"
-                    android:layout_height="117dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/settings" />
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Setings"
-                    android:textColor="#000000"
+                    android:text="Settings"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.35"
+                    app:srcCompat="@drawable/settings" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

@@ -1,6 +1,7 @@
 package com.example.celebrityquiz;
 
 import android.app.AppComponentFactory;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,7 @@ public class ReviewActivity extends AppCompatActivity {
             Log.d("subin", "notnull");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(gameDataAdapter);
+
 
     }
 

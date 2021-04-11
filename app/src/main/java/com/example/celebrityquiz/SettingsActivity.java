@@ -79,9 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Define Update and Starting buttons
         Button buttonUpdate = findViewById(R.id.buttonUpdate);
-        buttonStartQuiz = findViewById(R.id.buttonStartQuiz);
         buttonUpdate.setEnabled(true);
-        buttonStartQuiz.setEnabled(false);
         downloadTask = null; // Always initialize task to null
     }
 
@@ -99,7 +97,18 @@ public class SettingsActivity extends AppCompatActivity {
             Log.d("FIREBASEUSERID", mAuth.getUid());
             downloadTask = null;
             progressBarDownload.setProgress(progressBarDownload.getMax());
-            buttonStartQuiz.setEnabled(true); // Enable Start button when download is successful
+
+            if(radioButtonLevelOne.isChecked()) QuizInfoOriginator.getInstance().setLevel(1);
+            if(radioButtonLevelTwo.isChecked()) QuizInfoOriginator.getInstance().setLevel(2);
+            if(radioButtonLevelThree.isChecked()) QuizInfoOriginator.getInstance().setLevel(3);
+
+            if(radioButton30.isChecked()) QuizInfoOriginator.getInstance().setSeconds(30);
+            if(radioButton60.isChecked()) QuizInfoOriginator.getInstance().setSeconds(60);
+            if(radioButton90.isChecked()) QuizInfoOriginator.getInstance().setSeconds(90);
+
+            if(radioButtonCelebrity.isChecked()) QuizInfoOriginator.getInstance().setDomain(QuizInfoOriginator.DOMAIN_CELEBRITY);
+            if(radioButtonScience.isChecked()) QuizInfoOriginator.getInstance().setDomain(QuizInfoOriginator.DOMAIN_SCIENCE);
+            if(radioButtonAnimal.isChecked()) QuizInfoOriginator.getInstance().setDomain(QuizInfoOriginator.DOMAIN_ANIMAL);
         }
 
         @Override
@@ -150,6 +159,7 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtra("level", level);
         intent.putExtra("seconds", seconds);
+
         startActivity(intent);
     }
 

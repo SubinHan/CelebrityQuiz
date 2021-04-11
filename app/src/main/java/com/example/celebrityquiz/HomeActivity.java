@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -21,21 +22,27 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         CardView startQuizCardView = findViewById(R.id.startQuizCardView);
-        CardView historyCardView = findViewById(R.id.historyCardView);
+        CardView historyCardView = findViewById(R.id.settingsCardView);
         CardView rankCardView = findViewById(R.id.rankCardView);
         CardView reviewCardView = findViewById(R.id.reviewCardView);
 
         startQuizCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+                if(QuizInfoOriginator.getInstance().isDownloaded()) {
+                    Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+                    intent.putExtra("isReview", false);
+                    startActivity(intent);
+                }
+                else
+                    Toast.makeText(HomeActivity.this, "You need to download the quizzes first", Toast.LENGTH_SHORT).show();
             }
         });
 
         historyCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, HistoryActivity.class));
+                startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }
         });
 

@@ -9,19 +9,13 @@ public class GameData implements Serializable {
 
     String userEmail;
     List<Quiz> quizList;
+    int seconds;
     int leftTime;
     int score;
     int gameMdoe;
     String date;
-    QuizInfo quizInfo;
-
-    public QuizInfo getQuizInfo() {
-        return quizInfo;
-    }
-
-    public void setQuizInfo(QuizInfo quizInfo) {
-        this.quizInfo = quizInfo;
-    }
+    int level;
+    String domain;
 
     public GameData(){
     }
@@ -31,12 +25,16 @@ public class GameData implements Serializable {
         this.quizList = quizList;
     }
 
-    public GameData(String userEmail, List<Quiz> quizList, int leftTime, int score, int gameMdoe){
+    public GameData(String userEmail, List<Quiz> quizList, int seconds, int leftTime, int score, int gameMdoe, int level, String domain, String date){
         this.userEmail = userEmail;
         this.quizList = quizList;
+        this.seconds = seconds;
         this.leftTime = leftTime;
         this.score = score;
         this.gameMdoe = gameMdoe;
+        this.level = level;
+        this.domain = domain;
+        this.date = date;
     }
 
     public String getDate() {
@@ -49,6 +47,10 @@ public class GameData implements Serializable {
 
     public String getUserEmail() {
         return this.userEmail;
+    }
+
+    public int getSeconds() {
+        return seconds;
     }
 
     public int getLeftTime() {
@@ -67,6 +69,14 @@ public class GameData implements Serializable {
         return gameMdoe;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
@@ -79,11 +89,23 @@ public class GameData implements Serializable {
         this.quizList = quizList;
     }
 
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
     public void setLeftTime(int leftTime) {
         this.leftTime = leftTime;
     }
 
     public void setGameMdoe(int gameMdoe) {
         this.gameMdoe = gameMdoe;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 }

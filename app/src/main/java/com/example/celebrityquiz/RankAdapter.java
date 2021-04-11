@@ -1,10 +1,13 @@
 package com.example.celebrityquiz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,27 +37,29 @@ public class RankAdapter extends RecyclerView.Adapter{
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         TextView id = holder.itemView.findViewById(R.id.id);
         TextView domain = holder.itemView.findViewById(R.id.domain);
         TextView score = holder.itemView.findViewById(R.id.score);
+        TextView rank = holder.itemView.findViewById(R.id.rank);
 
         List<GameData> gameDataList = gameDataManager.getGameDataListOrderByGameMode(GameData.GAMEMODE_NORMAL);
         gameDataList.sort(new Comparator<GameData>(){
             @Override
             public int compare(GameData o1, GameData o2) {
                 if(o1.getScore() >= o2.getScore())
-                    return 1;
-                else
                     return -1;
+                else
+                    return 1;
             }
         });
         GameData gameData = gameDataList.get(position);
         if(gameData.getUserEmail() != null)
             id.setText(gameData.getUserEmail());
-        if(gameData.getQuizInfo().getDomain() != null)
-            domain.setText(gameData.getQuizInfo().getDomain());
+        if(gameData.getDomain() != null)
+            domain.setText(gameData.getDomain());
         score.setText(String.valueOf(gameData.getScore()));
+        rank.setText(String.valueOf(position + 1));
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.Map;
     The GameDataManager class is a singleton object.
  */
 public class GameDataManager {
-    public static final String ROOT = "dataTest";
+    public static final String ROOT = "gameData";
 
     private static GameDataManager instance;
     private FirebaseDatabase database;
