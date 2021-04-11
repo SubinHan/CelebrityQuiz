@@ -1,6 +1,7 @@
 package com.example.celebrityquiz;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameData implements Serializable {
@@ -35,6 +36,17 @@ public class GameData implements Serializable {
         this.level = level;
         this.domain = domain;
         this.date = date;
+    }
+
+    public List<Quiz> getWrongQuizzes(){
+        ArrayList<Quiz> wrongQuzizzes = new ArrayList<Quiz>();
+
+        for (Quiz quiz : quizList) {
+            if(quiz.correctAnswer != quiz.userAnswer)
+                wrongQuzizzes.add(quiz);
+        }
+
+        return wrongQuzizzes;
     }
 
     public String getDate() {

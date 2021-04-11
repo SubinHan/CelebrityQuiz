@@ -35,13 +35,11 @@
         <activity android:name="com.example.celebrityquiz.SettingsActivity" />
 
         <activity
-            android:name="com.example.celebrityquiz.ReviewActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+            android:name="com.example.celebrityquiz.ReviewActivity">
         </activity>
 
         <activity
-            android:name="com.example.celebrityquiz.RankActivity"
-            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+            android:name="com.example.celebrityquiz.RankActivity">
         </activity>
 
     </application>
