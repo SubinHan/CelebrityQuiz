@@ -67,6 +67,16 @@
             android:parentActivityName="com.example.celebrityquiz.MainActivity">
         </activity>
 
+        <activity
+            android:name="com.example.celebrityquiz.ReviewActivity"
+            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+        </activity>
+
+        <activity
+            android:name="com.example.celebrityquiz.RankActivity"
+            android:parentActivityName="com.example.celebrityquiz.MainActivity">
+        </activity>
+
     </application>
 
 </manifest>

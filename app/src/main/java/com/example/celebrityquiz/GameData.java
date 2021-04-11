@@ -12,6 +12,16 @@ public class GameData implements Serializable {
     int leftTime;
     int score;
     int gameMdoe;
+    String date;
+    QuizInfo quizInfo;
+
+    public QuizInfo getQuizInfo() {
+        return quizInfo;
+    }
+
+    public void setQuizInfo(QuizInfo quizInfo) {
+        this.quizInfo = quizInfo;
+    }
 
     public GameData(){
     }
@@ -27,6 +37,14 @@ public class GameData implements Serializable {
         this.leftTime = leftTime;
         this.score = score;
         this.gameMdoe = gameMdoe;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getUserEmail() {
